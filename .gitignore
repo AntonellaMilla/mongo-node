@@ -1,0 +1,50 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# === Environment variables ===
+#.env
+
+# === Logs ===
+logs
+*.log
+logs/*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# === Coverage / Testing ===
+coverage/
+.nyc_output/
+coverage-final.json
+cypress/videos/
+cypress/screenshots/
+
+# === System files ===
+.DS_Store
+Thumbs.db
+
+# === Editor/IDE ===
+.vscode/
+.idea/
+*.swp
+
+# === Build output ===
+dist/
+build/
+.tmp/
+.cache/
+.eslintcache
+
+# === OS ===
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# === MongoDB dump ===
+dump/
