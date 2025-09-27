@@ -14,47 +14,103 @@
   <!-- Navbar -->
   <nav>
     <div class="nav-wrapper teal">
-      <a href="#!" class="brand-logo center">Social Media</a>
+      <a href="/" class="brand-logo center">Social Media</a>
     </div>
   </nav>
 
   <div class="container">
     <h4 class="center-align">Bienvenido a Social Media</h4>
 
+    <!-- Botón para nuevo post -->
+    <div class="center-align" style="margin: 20px 0;">
+      <a class="btn waves-effect waves-light blue modal-trigger" href="#modalNuevoPost">
+        <i class="material-icons left">add</i> Nuevo Post
+      </a>
+    </div>
+
     <div class="row">
-      <!-- Card del Post -->
-      <div class="col s12 m6 l4">
-        <div class="card">
-          <div class="card-image">
-            <img src="https://media.istockphoto.com/id/627795510/photo/example.jpg?s=612x612&w=0&k=20&c=lpUf5rjPVd6Kl_M6heqC8sUncR4FLmtsRzeYdTr5X_I=" alt="Imagen del post">
-          </div>
-          <div class="card-content">
-            <span class="card-title">Título del Post</span>
-            <p>
-              Este es un ejemplo de contenido del post. Aquí puedes escribir la descripción o texto relacionado.
-            </p>
-            <p>
-              <strong>Hashtags:</strong>  
-              <span class="chip">#ejemplo</span>
-              <span class="chip">#social</span>
-              <span class="chip">#media</span>
-              <span class="chip">#práctica</span>
-              <span class="chip">#nodejs</span>
-            </p>
-          </div>
-          <div class="card-action">
-            <div class="right">
-              <a href="#!" class="btn-flat"><i class="material-icons teal-text">edit</i></a>
-              <a href="#!" class="btn-flat"><i class="material-icons red-text">delete</i></a>
+      <% if (posts && posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+          <div class="col s12 m6 l4">
+            <div class="card">
+              <div class="card-image">
+                <!-- Imagen fija (como pediste) -->
+                <img src="https://media.istockphoto.com/id/627795510/photo/example.jpg?s=612x612&w=0&k=20&c=lpUf5rjPVd6Kl_M6heqC8sUncR4FLmtsRzeYdTr5X_I=" alt="Imagen del post">
+              </div>
+              <div class="card-content">
+                <span class="card-title"><%= post.title %></span>
+                <p><%= post.content %></p>
+                <p>
+                  <strong>Hashtags:</strong>
+                  <% if (post.hashtags && post.hashtags.length > 0) { %>
+                    <% post.hashtags.forEach(tag => { %>
+                      <span class="chip">#<%= tag %></span>
+                    <% }) %>
+                  <% } else { %>
+                    <span class="chip grey lighten-1">Sin hashtags</span>
+                  <% } %>
+                </p>
+              </div>
+              <div class="card-action">
+                <div class="right">
+                  <!-- Editar y eliminar dinámicos -->
+                  <a href="/posts/edit/<%= post._id %>" class="btn-flat">
+                    <i class="material-icons teal-text">edit</i>
+                  </a>
+                  <a href="/posts/delete/<%= post._id %>" class="btn-flat">
+                    <i class="material-icons red-text">delete</i>
+                  </a>
+                </div>
+                <!-- Autor -->
+                <span><strong>Autor:</strong> <%= post.userId || "Anónimo" %></span>
+              </div>
             </div>
-            <span><strong>Autor:</strong> Juan Pérez</span>
           </div>
+        <% }) %>
+      <% } else { %>
+        <p class="center-align">No hay posts disponibles aún. ¡Crea uno nuevo!</p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Modal para nuevo post -->
+  <div id="modalNuevoPost" class="modal">
+    <div class="modal-content">
+      <h5>Crear Nuevo Post</h5>
+      <form action="/posts/create" method="POST">
+        <div class="input-field">
+          <input type="text" name="title" id="title" required>
+          <label for="title">Título</label>
         </div>
-      </div>
+        <div class="input-field">
+          <textarea name="content" id="content" class="materialize-textarea" required></textarea>
+          <label for="content">Contenido</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="hashtags" id="hashtags" placeholder="ej: nodejs,mongo,crud">
+          <label for="hashtags">Hashtags</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="imageUrl" id="imageUrl" placeholder="URL de la imagen">
+          <label for="imageUrl">Imagen</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="userId" id="userId" required>
+          <label for="userId">ID de Usuario</label>
+        </div>
+        <button type="submit" class="btn waves-effect waves-light teal">Guardar</button>
+      </form>
     </div>
   </div>
 
   <!-- Importar Materialize JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    // Inicializar modales
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      M.Modal.init(elems);
+    });
+  </script>
 </body>
 </html>

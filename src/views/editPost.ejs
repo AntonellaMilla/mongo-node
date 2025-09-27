@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Post</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+</head>
+<body class="grey lighten-4">
+  <div class="container">
+    <h4>Editar Post</h4>
+    <form action="/posts/update/<%= post._id %>" method="POST">
+      <div class="input-field">
+        <input id="title" type="text" name="title" value="<%= post.title %>" required>
+        <label for="title" class="active">Título</label>
+      </div>
+
+      <div class="input-field">
+        <textarea id="content" class="materialize-textarea" name="content" required><%= post.content %></textarea>
+        <label for="content" class="active">Contenido</label>
+      </div>
+
+      <div class="input-field">
+        <input id="hashtags" type="text" name="hashtags" value="<%= post.hashtags %>">
+        <label for="hashtags" class="active">Hashtags</label>
+      </div>
+
+      <button type="submit" class="btn teal">Actualizar</button>
+      <a href="/posts" class="btn grey">Cancelar</a>
+    </form>
+  </div>
+</body>
+</html>
